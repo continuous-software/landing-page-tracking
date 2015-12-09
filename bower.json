@@ -1,0 +1,17 @@
+{
+  "name": "Checkout Link and Cookie Setting",
+  "version": "0.0.1",
+  "authors": [
+    "maxinnos <maxpringle@gmail.com>"
+  ],
+  "description": "Retrieve tracking parameters, store as cookies, and append values to outbound links.",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

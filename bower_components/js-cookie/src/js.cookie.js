@@ -1,4 +1,3 @@
-<script type="text/javascript">
 /*!
  * JavaScript Cookie v2.0.4
  * https://github.com/js-cookie/js-cookie
@@ -56,12 +55,8 @@
 					}
 				} catch (e) {}
 
-				if (!converter.write) {
-					value = encodeURIComponent(String(value))
-						.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
-				} else {
-					value = converter.write(value, key);
-				}
+				value = encodeURIComponent(String(value));
+				value = value.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
 
 				key = encodeURIComponent(String(key));
 				key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
@@ -99,9 +94,7 @@
 				}
 
 				try {
-					cookie = converter.read ?
-						converter.read(cookie, name) : converter(cookie, name) ||
-						cookie.replace(rdecode, decodeURIComponent);
+					cookie = converter && converter(cookie, name) || cookie.replace(rdecode, decodeURIComponent);
 
 					if (this.json) {
 						try {
@@ -142,73 +135,5 @@
 		return api;
 	}
 
-	return init(function () {});
+	return init();
 }));
-
-
-jQuery(function ($) {
-$(document).ready(function () {
-	console.log('doc read');
-	var QueryString = function () {
-		var query_string = {};
-		var query = window.location.search.substring(1);
-		var vars = query.split("&");
-		for (var i=0;i<vars.length;i++) {
-			var pair = vars[i].split("=");
-			if (typeof query_string[pair[0]] === "undefined") {
-				query_string[pair[0]] = pair[1];
-			} else if (typeof query_string[pair[0]] === "string") {
-				var arr = [ query_string[pair[0]], pair[1] ];
-				query_string[pair[0]] = arr;
-			} else {
-				query_string[pair[0]].push(pair[1]);
-			}
-		}
-		return query_string;
-	} ();
-
-	console.log('query string ' + QueryString)
-
-
-	if(QueryString.aff){
-		var aff = QueryString.aff;
-		Cookies.set('aff', aff, { expires: 45 });
-	}
-	if(QueryString.sub){
-		var sub = QueryString.sub;
-		Cookies.set('sub', sub, { expires: 45 });
-	}
-	if(QueryString.trans){
-		var trans = QueryString.trans;
-		Cookies.set('trans', trans, { expires: 45 });
-	}
-	if(QueryString.c1){
-		var c1 = QueryString.c1;
-		Cookies.set('c1', c1, { expires: 45 });
-	}
-	$('.ctabuynow a').each(function(index){
-		var shoplink = $(this).attr('href');
-
-		if(Cookies.get('aff') || Cookies.get('sub') || Cookies.get('trans')){
-			shoplink += '?';
-			if(Cookies.get('aff')){
-				shoplink += 'aff=' + Cookies.get('aff');
-			} else {
-				shoplink += 'aff=';
-			}
-			if(Cookies.get('sub')){
-				shoplink += '&sub=' + Cookies.get('sub');
-			}
-			if(Cookies.get('trans')){
-				shoplink += '&trans=' + Cookies.get('trans');
-			}
-			if(Cookies.get('c1')){
-				shoplink += '&c1=' + Cookies.get('c1');
-			}
-		}
-	
-		$(this).attr('href',shoplink);
-	});
-});
-});
-</script>
